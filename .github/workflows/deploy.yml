@@ -9,18 +9,24 @@ jobs:
     environment: dev
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Pretending to deploy to $1"
+      - run: |
+        chmod +x cicd-capstone/*.sh
+        ./deploy.sh dev
 
   deploy-test:
     needs: deploy-dev
     environment: test
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Pretending to deploy to $1"
+      - run: |
+        chmod +x cicd-capstone/*.sh
+        ./deploy.sh test
 
   deploy-prod:
     needs: deploy-test
     environment: prod
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Pretending to deploy to $1"
+      - run: |
+        chmod +x cicd-capstone/*.sh
+        ./deploy.sh prod

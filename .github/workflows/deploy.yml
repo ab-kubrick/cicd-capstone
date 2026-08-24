@@ -10,7 +10,7 @@ jobs:
     steps: 
       - uses: actions/checkout@v7
       - id: build-step
-        run: ./scripts/build.sh
+        run: ./build.sh
       - uses: actions/upload-artifact@v4
         with:
           name: pipeline-bundle

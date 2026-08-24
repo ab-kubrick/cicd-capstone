@@ -5,28 +5,48 @@ on:
     branches: [main]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: build-step
+        run: ./scripts/build.sh                            # the script writes "tarball=..." to $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-bundle
+          path: ./dist
+
   deploy-dev:
     environment: dev
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: pipeline-bundle
       - run: |
-        chmod +x cicd-capstone/*.sh
-        ./deploy.sh dev
+        chmod +x cicd-capstone/scripts/*.sh
+        ./scripts/deploy.sh dev
 
   deploy-test:
     needs: deploy-dev
     environment: test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: pipeline-bundle
       - run: |
-        chmod +x cicd-capstone/*.sh
-        ./deploy.sh test
+        chmod +x cicd-capstone/scripts/*.sh
+        ./scripts/deploy.sh test
 
   deploy-prod:
     needs: deploy-test
     environment: prod
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: pipeline-bundle
       - run: |
-        chmod +x cicd-capstone/*.sh
-        ./deploy.sh prod
+        chmod +x cicd-capstone/scripts/*.sh
+        ./scripts/deploy.sh prod

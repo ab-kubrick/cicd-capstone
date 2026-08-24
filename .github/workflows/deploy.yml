@@ -1,0 +1,32 @@
+name: Deploy
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-dev:
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        chmod +x cicd-capstone/*.sh
+        ./deploy.sh dev
+
+  deploy-test:
+    needs: deploy-dev
+    environment: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        chmod +x cicd-capstone/*.sh
+        ./deploy.sh test
+
+  deploy-prod:
+    needs: deploy-test
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        chmod +x cicd-capstone/*.sh
+        ./deploy.sh prod

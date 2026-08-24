@@ -5,42 +5,22 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v7
-      - id: build-step
-        run: ./build.sh
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-bundle
-
   deploy-dev:
-    needs: build
     environment: dev
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v8
-        with:
-          name: pipeline-bundle
-      - run: echo "Pretending to deploy to dev"
+      - run: echo "Pretending to deploy to $1
 
   deploy-test:
     needs: deploy-dev
     environment: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v8
-        with:
-          name: pipeline-bundle
-      - run: echo "Pretending to deploy to test"
+      - run: echo "Pretending to deploy to $1"
 
   deploy-prod:
     needs: deploy-test
     environment: prod
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v8
-        with:
-          name: pipeline-bundle
-      - run: echo "Pretending to deploy to prod"
+      - run: echo "Pretending to deploy to $1"

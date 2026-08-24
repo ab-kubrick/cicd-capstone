@@ -21,3 +21,23 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install -r requirements.txt
       - run: pytest
+
+  deploy-dev:
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Pretending to deploy to dev"
+
+  deploy-test:
+    needs: deploy-dev
+    environment: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Pretending to deploy to test"
+
+  deploy-prod:
+    needs: deploy-test
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Pretending to deploy to prod"

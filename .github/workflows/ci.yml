@@ -37,7 +37,7 @@ jobs:
 
   deploy-prod:
     needs: deploy-test
-    environment: dev
+    environment: prod
     runs-on: ubuntu-latest
     steps:
       - run: echo "Pretending to deploy to prod"

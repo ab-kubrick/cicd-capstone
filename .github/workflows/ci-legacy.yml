@@ -5,18 +5,18 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actioins/setup-project
+      - uses: ./.github/actions/setup-project
       - run: pip install ruff
       - run: echo "ruff check src tests"
 
   unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actioins/setup-project
+      - uses: ./.github/actions/setup-project
       - run: echo "pytest tests/unit"
 
   integration-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actioins/setup-project
+      - uses: ./.github/actions/setup-project
       - run: echo "pytest tests/integration"
